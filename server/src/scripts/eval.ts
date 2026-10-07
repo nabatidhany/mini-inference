@@ -69,6 +69,13 @@ const TENANT = flag('tenant', 'eval');
 const USE_JUDGE = has('judge');
 const OUT_PATH = join(serverRoot, '..', 'docs', 'eval-results.md');
 
+// --- pacing (Groq free tier has RPM/TPM limits; the eval must not trip them) --
+const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
+const CASE_DELAY_MS = 2000;        // between cases (~15-20 RPM sustained)
+const JUDGE_DELAY_MS = 1500;       // between judge calls
+const RETRY_DELAY_MS = 20_000;     // after a rate-limit fallback
+const INTER_CONFIG_COOLDOWN_MS = 60_000; // between configurations (incl. judge)
+
 // --- HTTP helpers (incl. a tiny SSE reader — same as the console client) ------
 async function admin(path: string, body?: unknown): Promise<unknown> {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -228,30 +235,40 @@ async function runConfig(label: string, cases: EvalCase[], threshold: number | n
   await admin('/admin/router', { shortCircuitThreshold: threshold });
   const results: CaseResult[] = [];
   for (const c of cases) {
-    const r = await chatOnce(c.message);
-    const done = (r.done ?? {}) as Record<string, unknown>;
-    const row = done['request_id'] ? await usageRow(String(done['request_id'])) : null;
-    results.push({
-      id: c.id,
-      message: c.message,
-      outOfScope: c.outOfScope,
-      expectedIntent: c.expectedIntent,
-      expectedAnswer: c.expectedAnswer,
-      outcome: String(done['outcome'] ?? r.error?.['code'] ?? 'error'),
-      backend: String(done['backend'] ?? 'unknown'),
-      routeRule: String(row?.['route_rule'] ?? done['route_rule'] ?? 'unknown'),
-      intent: (done['intent'] as string | null) ?? null,
-      intentVote: (row?.['intent_vote'] as string | null) ?? null,
-      intentLLM: (row?.['intent_llm'] as string | null) ?? null,
-      confidence: (done['confidence'] as number | null) ?? null,
-      ttfbMs: Number(done['latency_ttfb_ms'] ?? 0),
-      totalMs: Number(done['latency_total_ms'] ?? 0),
-      costUsd: Number(done['cost_usd'] ?? 0),
-      promptTokens: Number(done['prompt_tokens'] ?? 0),
-      completionTokens: Number(done['completion_tokens'] ?? 0),
-      answer: r.answer,
-    });
-    await new Promise((resolve) => setTimeout(resolve, 150)); // be gentle
+    // retry a case (max 2) if the provider rate-limited the attempt — a 429
+    // fallback would silently turn config B into an extractive run again.
+    for (let attempt = 1; ; attempt++) {
+      const r = await chatOnce(c.message);
+      const done = (r.done ?? {}) as Record<string, unknown>;
+      const row = done['request_id'] ? await usageRow(String(done['request_id'])) : null;
+      const rateLimited = String(row?.['fallback_reason'] ?? '').includes('GROQ_HTTP_429');
+      const result: CaseResult = {
+        id: c.id,
+        message: c.message,
+        outOfScope: c.outOfScope,
+        expectedIntent: c.expectedIntent,
+        expectedAnswer: c.expectedAnswer,
+        outcome: String(done['outcome'] ?? r.error?.['code'] ?? 'error'),
+        backend: String(done['backend'] ?? 'unknown'),
+        routeRule: String(row?.['route_rule'] ?? done['route_rule'] ?? 'unknown'),
+        intent: (done['intent'] as string | null) ?? null,
+        intentVote: (row?.['intent_vote'] as string | null) ?? null,
+        intentLLM: (row?.['intent_llm'] as string | null) ?? null,
+        confidence: (done['confidence'] as number | null) ?? null,
+        ttfbMs: Number(done['latency_ttfb_ms'] ?? 0),
+        totalMs: Number(done['latency_total_ms'] ?? 0),
+        costUsd: Number(done['cost_usd'] ?? 0),
+        promptTokens: Number(done['prompt_tokens'] ?? 0),
+        completionTokens: Number(done['completion_tokens'] ?? 0),
+        answer: r.answer,
+      };
+      results.push(result);
+      console.log(`  case ${String(c.id).padStart(2)} ${c.outOfScope ? 'oos' : '  '} -> ${result.outcome.padEnd(7)} ${result.backend.padEnd(10)} ${result.routeRule}${rateLimited ? ' [rate-limited, retrying]' : ''}`);
+      if (!rateLimited || attempt >= 3) break;
+      results.pop(); // discard the rate-limited attempt
+      await sleep(RETRY_DELAY_MS);
+    }
+    await sleep(CASE_DELAY_MS);
   }
 
   const inScope = results.filter((r) => !r.outOfScope);
@@ -273,6 +290,7 @@ async function runConfig(label: string, cases: EvalCase[], threshold: number | n
     for (const r of answered.slice(0, 15)) { // judge a sample of 15 to stay light
       const s = await judge(r.answer, r.expectedAnswer ?? '', r.message);
       if (!Number.isNaN(s)) scores.push(s);
+      await sleep(JUDGE_DELAY_MS);
     }
     judgeAvg = scores.length > 0 ? mean(scores) : null;
   }
@@ -346,6 +364,10 @@ async function main(): Promise<void> {
 
   const a = await runConfig('routing ON (short-circuit 0.75)', cases, 0.75);
   console.log(`Config A done: ${Object.entries(a.outcomeCounts).map(([k, v]) => `${k}=${v}`).join(' ')}`);
+
+  console.log(`Cooling down ${INTER_CONFIG_COOLDOWN_MS / 1000}s before config B (provider rate limits)...`);
+  await sleep(INTER_CONFIG_COOLDOWN_MS);
+
   await admin('/admin/quota-reset', { tenant: TENANT });
   const b = await runConfig('routing OFF (always real model)', cases, null);
   console.log(`Config B done: ${Object.entries(b.outcomeCounts).map(([k, v]) => `${k}=${v}`).join(' ')}\n`);

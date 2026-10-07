@@ -68,8 +68,8 @@ export default function App() {
                 tenantName={tenant.name}
                 onMeta={(meta) => setInspected({ streaming: true, meta })}
                 onDelta={() => setInspected((prev) => (prev.streaming ? prev : { ...prev, streaming: true }))}
-                onDone={(done) => setInspected({ streaming: false, meta: inspected.meta, done })}
-                onError={(error) => setInspected({ streaming: false, error })}
+                onDone={(done) => setInspected((prev) => ({ streaming: false, meta: prev.meta, done }))}
+                onError={(error) => setInspected((prev) => ({ streaming: false, meta: prev.meta, done: prev.done, error }))}
               />
             </div>
             <div className="hidden min-h-0 overflow-y-auto lg:block">

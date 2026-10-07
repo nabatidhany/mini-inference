@@ -52,6 +52,9 @@ export default function ChatPanel(props: {
     const patch = (fn: (m: ChatMessage) => ChatMessage) =>
       setMessages((list) => list.map((m) => (m.id === assistantId ? fn(m) : m)));
 
+    let sawDone = false;
+    let sawError: StreamErrorEvent | null = null;
+
     try {
       await postSse('/v1/chat', props.apiKey, { message }, (e) => {
         if (e.event === 'meta') {
@@ -64,20 +67,22 @@ export default function ChatPanel(props: {
           props.onDelta();
         } else if (e.event === 'done') {
           const done = e.data as DoneEvent;
+          sawDone = true;
           patch((m) => ({ ...m, done }));
           props.onDone(done);
         } else if (e.event === 'error') {
           const err = e.data as StreamErrorEvent;
+          sawError = err;
           patch((m) => ({ ...m, error: err }));
           props.onError(err);
         }
       });
-      // stream ended without a done/error event -> stop the spinner
-      setMessages((list) => {
-        const last = list.find((m) => m.id === assistantId);
-        if (last && !last.done && !last.error) props.onError({ code: 'STREAM_ENDED', message: 'stream ended without a result event' });
-        return list;
-      });
+      if (!sawDone && !sawError) {
+        // stream ended with neither done nor error — surface it honestly
+        const err = { code: 'STREAM_ENDED', message: 'stream ended without a result event' };
+        patch((m) => ({ ...m, error: err }));
+        props.onError(err);
+      }
     } catch (err) {
       const payload =
         err instanceof HttpError

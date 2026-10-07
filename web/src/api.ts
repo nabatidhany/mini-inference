@@ -1,8 +1,10 @@
 /**
- * POST + SSE client. The native EventSource only supports GET without
- * headers, so we stream the gateway's text/event-stream over fetch and parse
- * it ourselves (handles chunks that split events mid-line).
+ * API client for the gateway. In dev, Vite proxies /v1 and /admin to
+ * localhost:8080 (see vite.config.ts). In production, set VITE_API_URL to
+ * the deployed gateway origin (e.g. https://<service>.onrender.com).
  */
+const API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
+const full = (url: string): string => `${API_URL}${url}`;
 
 export interface SseEvent<T = unknown> {
   event: string;
@@ -28,7 +30,7 @@ export async function postSse(
   onEvent: (e: SseEvent) => void,
   signal?: AbortSignal,
 ): Promise<void> {
-  const res = await fetch(url, {
+  const res = await fetch(full(url), {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': apiKey },
     body: JSON.stringify(body),
@@ -85,7 +87,7 @@ export async function postSse(
 export async function getJson<T>(url: string, apiKey?: string): Promise<T> {
   const headers: Record<string, string> = {};
   if (apiKey) headers['x-api-key'] = apiKey;
-  const res = await fetch(url, { headers });
+  const res = await fetch(full(url), { headers });
   if (!res.ok) {
     let message = `HTTP ${res.status}`;
     try {
@@ -100,7 +102,7 @@ export async function getJson<T>(url: string, apiKey?: string): Promise<T> {
 }
 
 export async function postJson<T>(url: string, apiKey: string, body: unknown): Promise<T> {
-  const res = await fetch(url, {
+  const res = await fetch(full(url), {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': apiKey },
     body: JSON.stringify(body),
