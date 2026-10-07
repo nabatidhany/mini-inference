@@ -9,7 +9,6 @@
  * KB instead of fabricating text. Latency/failure are admin-configurable
  * at runtime (POST /admin/mock).
  */
-import { estimateTokens } from '../lib/tokenize.js';
 import { runtime } from '../lib/runtime.js';
 import { sleep } from './async.js';
 import type { BackendEvent, ChatBackend, ChatTask } from './types.js';
@@ -43,10 +42,13 @@ export function createExtractiveBackend(): ChatBackend {
         await sleep(WORD_DELAY_MS, signal);
       }
 
+      // No model was called: zero tokens consumed, zero cost — metering
+      // reflects what actually happened (the retrieval itself is free), and
+      // the request is quota-free by design (see REPORT.md).
       yield {
         type: 'usage',
-        promptTokens: estimateTokens(task.system) + estimateTokens(task.user),
-        completionTokens: estimateTokens(answer),
+        promptTokens: 0,
+        completionTokens: 0,
         source: 'estimated',
       };
     },

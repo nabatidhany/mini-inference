@@ -72,8 +72,9 @@ const OUT_PATH = join(serverRoot, '..', 'docs', 'eval-results.md');
 // --- pacing (Groq free tier has RPM/TPM limits; the eval must not trip them) --
 const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
 const CASE_DELAY_MS = 2000;        // between cases (~15-20 RPM sustained)
-const JUDGE_DELAY_MS = 1500;       // between judge calls
+const JUDGE_DELAY_MS = 2500;        // between judge calls (stay under RPM limits)
 const RETRY_DELAY_MS = 20_000;     // after a rate-limit fallback
+const PRE_JUDGE_COOLDOWN_MS = 60_000; // let the chat burst clear the TPM window
 const INTER_CONFIG_COOLDOWN_MS = 60_000; // between configurations (incl. judge)
 
 // --- HTTP helpers (incl. a tiny SSE reader — same as the console client) ------
@@ -176,7 +177,7 @@ function rougeLF1(cand: string, ref: string): number {
 }
 
 // --- LLM judge (optional) -------------------------------------------------------
-async function judge(cand: string, ref: string, question: string): Promise<number> {
+async function judgeOnce(cand: string, ref: string, question: string): Promise<number> {
   const res = await fetch(`${config.groqBaseUrl}/chat/completions`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${config.groqApiKey}` },
@@ -198,6 +199,16 @@ async function judge(cand: string, ref: string, question: string): Promise<numbe
   const j = (await res.json()) as { choices?: { message?: { content?: string } }[] };
   const m = /\d/.exec(j.choices?.[0]?.message?.content ?? '');
   return m ? Math.min(5, Math.max(1, Number(m[0]))) : Number.NaN;
+}
+
+/** Judge with rate-limit backoff (the free tier throttles bursts). */
+async function judge(cand: string, ref: string, question: string): Promise<number> {
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    const s = await judgeOnce(cand, ref, question);
+    if (!Number.isNaN(s)) return s;
+    await sleep(30_000);
+  }
+  return Number.NaN;
 }
 
 // --- metrics --------------------------------------------------------------------
@@ -286,6 +297,8 @@ async function runConfig(label: string, cases: EvalCase[], threshold: number | n
 
   let judgeAvg: number | null = null;
   if (USE_JUDGE) {
+    console.log(`  judging ${Math.min(15, answered.length)} answered cases (with cooldown)...`);
+    await sleep(PRE_JUDGE_COOLDOWN_MS);
     const scores: number[] = [];
     for (const r of answered.slice(0, 15)) { // judge a sample of 15 to stay light
       const s = await judge(r.answer, r.expectedAnswer ?? '', r.message);

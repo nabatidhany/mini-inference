@@ -126,10 +126,10 @@ cd server && npm test      # BM25, sentinel parser, quota (reserve-then-settle)
 
 ## Deployment
 
-- **Gateway**: Render web service (repo root: `server/`, start `npm start`). Env vars: `GROQ_API_KEY`, `ADMIN_KEY`, `CORS_ORIGIN`, `PORT`, `DB_PATH` (default `data/app.db`; free-tier disks are ephemeral — the server re-seeds itself on boot).
+- **Gateway**: Render web service (root: `server/`, start `npm start`). Env vars: `GROQ_API_KEY`, `ADMIN_KEY`, `CORS_ORIGIN`, `DB_PATH`.
 - **Console**: Vercel (root: `web/`), env `VITE_API_URL=https://<render-service>.onrender.com`.
 
-Known free-tier trade-off: the Render service spins down after ~15 min idle; the first request after that pays a ~50s cold start. Wake it with `curl <url>/healthz` before demoing.
+Step-by-step (with a demo/video checklist): **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**. Known free-tier trade-off: the Render service spins down after ~15 min idle; the first request after that pays a ~50s cold start — wake it with `curl <url>/healthz` before demoing.
 
 ## Dataset
 
