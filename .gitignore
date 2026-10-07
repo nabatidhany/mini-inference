@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# runtime data
+server/data/
+server/data-raw/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# build output
+server/dist/
+web/dist/
+
+# misc
+.DS_Store
+*.log

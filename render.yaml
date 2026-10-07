@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: inference-router-gateway
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: GROQ_API_KEY
+        sync: false # set in the Render dashboard (secret)
+      - key: ADMIN_KEY
+        sync: false # set in the Render dashboard (secret)
+      - key: DB_PATH
+        value: data/app.db
+      # CORS_ORIGIN should be set to the Vercel console origin, e.g.
+      # https://your-console.vercel.app — unset means allow-all (dev default).

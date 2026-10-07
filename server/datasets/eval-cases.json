@@ -1,0 +1,212 @@
+[
+ {
+  "id": 1,
+  "outOfScope": false,
+  "message": "I want help to cancel purchase {{Order Number}}",
+  "expectedIntent": "cancel_order",
+  "expectedAnswer": "I'm with you that you are seeking assistance with canceling your purchase with the order number {{Order Number}}. Our team is here to help guide you through the process and ensure a seamless experience. Here's what you need to do:\n\n1. Log into Your Account: Start by signing into your {{Online Company Portal Info}}.\n2. Access Your Order History: Once logged in, navigate to the '{{Online Order Interaction}}' or '{{Online Order Interaction}}' section.\n3. Locate the Purchase: Look for the specific purchase associated with the order number {{Order Number}}. Click on it to view the details.\n4. Initiate the Cancellation: You should see an option labeled '{{Online Order Interaction}}' associated with your purchase. Please select this to proceed with the cancellation.\n5. Confirm the Cancellation: Our system may ask you to confirm the cancellation or gather some feedback. Kindly complete any necessary steps.\n\nIf you encounter any difficulties or have further questions throughout the process, our dedicated team is available to assist you. You can reach us during {{Customer Support Hours}} at {{Customer Support Phone Number}} or engage in a live chat on our website at {{Website URL}}. Your satisfaction is our priority, and we appreciate your trust in our services."
+ },
+ {
+  "id": 2,
+  "outOfScope": false,
+  "message": "how to edt order {{Order Number}}",
+  "expectedIntent": "change_order",
+  "expectedAnswer": "We understand that you are looking for assistance in editing order number {{Order Number}}. Making changes to your order is important, and we're here to help. To edit your order, please follow these steps:\n\n1. Log in to your account on our website or app.\n2. Navigate to the 'My Orders' section.\n3. Locate and select the order with the number {{Order Number}}.\n4. Look for the 'Edit Order' or 'Modify Order' option.\n5. Click on it to access the order details.\n6. Follow the prompts to make the necessary changes, such as adding or removing items, updating quantities, or modifying shipping address.\n7. Review the changes you have made and ensure they are correct.\n8. Once you are satisfied, proceed to confirm the changes to your order.\n\nPlease keep in mind that not all orders may be editable, especially if they are already in the shipping or processing phase. If you encounter any issues or need further assistance with editing your order, feel free to reach out to our customer support team. We're here to help you every step of the way!"
+ },
+ {
+  "id": 3,
+  "outOfScope": false,
+  "message": "there are troubles trying to modify my dfelivery address",
+  "expectedIntent": "change_shipping_address",
+  "expectedAnswer": "I apologize for the inconvenience you're experiencing while trying to modify your delivery address. To assist you further, please provide me with the specific details of the issue you're encountering so that I can find a solution for you."
+ },
+ {
+  "id": 4,
+  "outOfScope": false,
+  "message": "I can't find the cancellation penalty, can you help me?",
+  "expectedIntent": "check_cancellation_fee",
+  "expectedAnswer": "I apologize for any confusion. To help you understand the cancellation penalty, please provide me with your account details, and I will be happy to assist you further."
+ },
+ {
+  "id": 5,
+  "outOfScope": false,
+  "message": "check the bill from {{Person Name}}",
+  "expectedIntent": "check_invoice",
+  "expectedAnswer": "I understand your need to locate your bill from {{Salutation}} {{Client Last Name}}. Let me assist you with that. Can you please provide me with any additional details, such as a date range or any specific information related to the bill? This will help me narrow down the search and find the bill from {{Person Name}} more efficiently. Rest assured, I'm here to guide you every step of the way."
+ },
+ {
+  "id": 6,
+  "outOfScope": false,
+  "message": "I need help listing your payment modalities",
+  "expectedIntent": "check_payment_methods",
+  "expectedAnswer": "Certainly! I'm here to assist you in listing our available payment modalities. Please find the comprehensive list below:\n\n- **Credit/Debit Card:** We accept major cards such as Visa, Mastercard, and American Express.\n- **PayPal:** A widely recognized and secure online payment method.\n- **Bank Transfer:** You can make direct payments from your bank account.\n- **Apple Pay:** This option is available for Apple users, allowing for quick and convenient payments.\n- **Google Wallet:** A payment system provided by Google that offers fast and easy checkouts.\n\nIf you have any questions about any of these payment methods or need further assistance, please feel free to let me know. Your satisfaction is our priority, and we're here to support you every step of the way!"
+ },
+ {
+  "id": 7,
+  "outOfScope": false,
+  "message": "see in what situations can I ask for refunds",
+  "expectedIntent": "check_refund_policy",
+  "expectedAnswer": "Absolutely! I completely understand your need to gain clarity on the situations in which you can request a refund. Here are some common scenarios in which you may be eligible for a refund:\n\n1. **Product/Service Defect:** If the product or service you received is defective or does not meet your expectations, you may have grounds for a refund.\n2. **Cancellation within Grace Period:** If you change your mind about a purchase within the specified grace period, you can typically request a refund.\n3. **Unsatisfactory Quality:** If the quality of the product or service falls short of what was promised or advertised, you may be entitled to a refund.\n4. **Late Delivery:** If your product or service is not delivered within the agreed-upon timeframe, you may be eligible for a refund.\n5. **Unauthorized Charges:** If you notice any unauthorized charges on your account, we will investigate the issue and assist you in obtaining a refund if necessary.\n6. **Misrepresentation of Product/Service:** If the product or service was misrepresented in any way, you may be able to request a refund.\n\nIt's important to note that these situations may vary depending on the specific policies of each vendor or service provider. I recommend reviewing the terms and conditions or contacting the seller directly for a detailed understanding of their refund policy. If you have a specific order or concern, please provide me with additional details, such as the {{Order Number}}, and I will be happy to assist you further.\n\nI hope this information clarifies the situations in which you can request a refund. Please let me know if there is anything else I can help you with."
+ },
+ {
+  "id": 8,
+  "outOfScope": false,
+  "message": "the experience with ya was awful i have to  lodge a claim",
+  "expectedIntent": "complaint",
+  "expectedAnswer": "I'm truly sorry to hear that your experience with us was unpleasant and that you feel the need to lodge a claim. Your feedback is incredibly important to us and we take it seriously. Would you mind sharing the details of your experience and the specific issues you faced? This will help us investigate the matter thoroughly and work towards a satisfactory resolution. We appreciate your patience and cooperation in this process."
+ },
+ {
+  "id": 9,
+  "outOfScope": false,
+  "message": "help me checking at what time i can reach customer support",
+  "expectedIntent": "contact_customer_service",
+  "expectedAnswer": "Happy to hear from you! I truly understand that you need assistance in checking the availability of our customer support team. Our customer support is available from {{Customer Support Hours}}. You can reach us during these hours for any inquiries or concerns you may have. How else can I assist you today?"
+ },
+ {
+  "id": 10,
+  "outOfScope": false,
+  "message": "what do I need to do to speak with someone?",
+  "expectedIntent": "contact_human_agent",
+  "expectedAnswer": "We're all ears! I'm tuned into the idea that you're looking for guidance on how to speak with someone. Let me assist you with that. To connect with a representative, you can either click on the \"Live Chat\" button on our website or call our customer support hotline at {{Customer Support Phone Number}}. Our dedicated team of experts is available {{Customer Support Hours}} to address any questions or concerns you may have. Please don't hesitate to reach out to us for personalized assistance. We're here to help!"
+ },
+ {
+  "id": 11,
+  "outOfScope": false,
+  "message": "I do not know how I can create a {{Account Type}} account",
+  "expectedIntent": "create_account",
+  "expectedAnswer": "I appreciate your interest in creating a {{Account Type}} account with us! To help you with the process, I'll guide you step-by-step. First, visit our website at {{Website URL}} and navigate to the account creation section. Look for the option to create a {{Account Type}} account, and click on it. You'll be prompted to provide some necessary information, such as your name, email address, and preferred username. Once you've filled in the required details, review the terms and conditions, and click on the \"Create Account\" button. Our system will then process your request, and you'll receive a confirmation email with further instructions. If you have any questions or need assistance at any point, feel free to reach out to our customer support team. We're here to ensure a smooth and enjoyable account creation experience for you!"
+ },
+ {
+  "id": 12,
+  "outOfScope": false,
+  "message": "I do not know what I have to do to close my {{Account Category}} account",
+  "expectedIntent": "delete_account",
+  "expectedAnswer": "Thank you for getting in touch to us regarding the closure of your {{Account Category}} account. I understand that you're unsure about the steps you need to take, and I'm here to help guide you through the process. Closing your account can be done easily, and I'll provide you with the necessary information to ensure a smooth experience.\nTo close your {{Account Category}} account, please follow these steps:\n1. Log in to your account on our website.\n2. Navigate to the account settings or profile section.\n3. Look for the option to \"Close Account\" or \"Terminate Account.\"\n4. Click on the designated option and carefully read any additional instructions or terms.\n5. Confirm your decision to close the account.\n6. Some platforms may require you to answer a few questions or verify your identity before proceeding with the closure.\n7. After confirming, your account will be closed, and you will receive a confirmation email.\nIf you encounter any difficulties or require further assistance throughout the process, please don't hesitate to reach out to our customer support team. They are available {{Customer Support Hours}} at {{Customer Support Phone Number}} or through the Live Chat on our website at {{Website URL}}. We are here to ensure your experience is smooth and satisfactory."
+ },
+ {
+  "id": 13,
+  "outOfScope": false,
+  "message": "assistance seeing the methods for shipping",
+  "expectedIntent": "delivery_options",
+  "expectedAnswer": "Ah, let me be your guide in exploring the landscape of shipping methods available to you! Here's how you can easily view the different options:\n\n1. Visit our website and navigate to the product page of the item you wish to purchase.\n2. Look for the \"Shipping\" or \"Delivery Options\" section on the product page.\n3. Click on the section to expand it and reveal the various shipping methods.\n4. Review the details and estimated delivery times for each option.\n5. Feel free to compare the prices, speeds, and any additional features offered.\n6. Once you've decided on the preferred shipping method, proceed with adding the item to your cart and completing the checkout process.\n\nRemember, if you have any specific requirements or questions regarding the shipping methods available, don't hesitate to ask. We're here to ensure that your shipping experience is smooth and tailored to your needs."
+ },
+ {
+  "id": 14,
+  "outOfScope": false,
+  "message": "wanna check how soon can i expect my article",
+  "expectedIntent": "delivery_period",
+  "expectedAnswer": "We understand your curiosity about the estimated arrival time of your article. To provide you with accurate information, could you please provide us with the {{Order Number}} or {{Tracking Number}}? Once we have that, we will be able to assist you in determining the expected delivery date. Your patience is greatly appreciated in this matter."
+ },
+ {
+  "id": 15,
+  "outOfScope": false,
+  "message": "update {{Account Category}} account",
+  "expectedIntent": "edit_account",
+  "expectedAnswer": "It's truly inspiring to witness your commitment to constantly updating and enhancing your {{Account Category}} account. Your dedication to optimizing your account and ensuring that it aligns with your needs and preferences is truly commendable. We're here to help you with your account update. Could you please provide more details regarding the specific changes you would like to make? Together, we'll make sure your {{Account Category}} account is tailored to meet your expectations."
+ },
+ {
+  "id": 16,
+  "outOfScope": false,
+  "message": "I need help downloading my bill #00108",
+  "expectedIntent": "get_invoice",
+  "expectedAnswer": "Absolutely! I understand your need for assistance with downloading your bill. Give me just a moment to locate and retrieve bill #{{Invoice Number}} for you. Once I have it, I will guide you step-by-step through the process. Thank you for your patience, and please feel free to ask any other questions you may have in the meantime."
+ },
+ {
+  "id": 17,
+  "outOfScope": false,
+  "message": "assistance demanding restitutions of money",
+  "expectedIntent": "get_refund",
+  "expectedAnswer": "I truly empathize with your situation and understand your need for assistance in demanding restitutions for your money. It can be frustrating and distressing to experience a situation where you feel your money needs to be returned. Be assured that I am here to support you through this process. Could you please provide more details about your specific situation? This will enable me to guide you with the most appropriate steps and ensure that your concerns are addressed effectively. Rest assured that I will work diligently to help you get the resolution you deserve."
+ },
+ {
+  "id": 18,
+  "outOfScope": false,
+  "message": "wanna know more about my corporate newsletter subscription",
+  "expectedIntent": "newsletter_subscription",
+  "expectedAnswer": "I appreciate your interest in learning more about your corporate newsletter subscription. Rest assured, our newsletter provides valuable updates, exclusive content, and insights tailored specifically to our corporate clients. By subscribing, you'll stay informed about industry trends, upcoming events, promotional offers, and other relevant information that can help your business thrive. Additionally, our newsletters are designed to be easily digestible, visually appealing, and mobile-friendly, ensuring a seamless reading experience. If there's any specific aspect or feature of our newsletter you'd like to know more about, please don't hesitate to let me know!"
+ },
+ {
+  "id": 19,
+  "outOfScope": false,
+  "message": "i need assistance to inform of problems with payment",
+  "expectedIntent": "payment_issue",
+  "expectedAnswer": "We understand that you're facing some problems with your payment, and we appreciate you reaching out to inform us about it. Rest assured, our team is here to help you navigate through this issue and find a resolution. To gather more details about the problem, could you please provide some specific information about the payment-related issues you're encountering? This will enable us to analyze the situation thoroughly and provide you with the most accurate and effective assistance. We genuinely appreciate your cooperation, and we're committed to resolving this matter for you as quickly as possible."
+ },
+ {
+  "id": 20,
+  "outOfScope": false,
+  "message": "can unelp me shop a few of ur article",
+  "expectedIntent": "place_order",
+  "expectedAnswer": "Thank you for reaching out! I'm here to guide you in shopping for a few of our articles. To get started, could you please provide me with more details about the specific articles you are interested in? This information will help me assist you better in finding and ordering the perfect items."
+ },
+ {
+  "id": 21,
+  "outOfScope": false,
+  "message": "help me retrieve the fucking PIN code of my account",
+  "expectedIntent": "recover_password",
+  "expectedAnswer": "I realized that you're seeking assistance in retrieving the PIN code for your account. I apologize for any frustration you may be experiencing. Rest assured, I'm here to help you through this process. To retrieve your PIN code, please follow these steps:\n\n1. Access the \"{{Account Recovery}}\" page on our platform.\n2. Look for the option to \"{{Retrieve PIN}}\" and click on it.\n3. You may be asked to provide some verification information to confirm your identity. This is to ensure the security of your account.\n4. Once your identity is verified, you will be able to view and retrieve your PIN code.\n\nIf you encounter any difficulties or if you have any further questions, please don't hesitate to reach out. We are always available to provide you with the assistance you need."
+ },
+ {
+  "id": 22,
+  "outOfScope": false,
+  "message": "I do not know how to report problems with registrations",
+  "expectedIntent": "registration_problems",
+  "expectedAnswer": "We appreciate your willingness to seek guidance on how to report problems with registrations. Our goal is to assist you every step of the way. To report any issues you are facing during the registration process, you can reach out to our customer support team through our website or contact our helpline at {{Customer Support Phone Number}}. Our team of experts will be available to listen, understand, and provide you with the necessary assistance to resolve the problems you are encountering. By reporting the issues, you are contributing to the improvement of our services and ensuring a smoother registration experience for future users. We value your feedback and look forward to helping you overcome any obstacles during your registration process."
+ },
+ {
+  "id": 23,
+  "outOfScope": false,
+  "message": "uhave a way to send a reivew",
+  "expectedIntent": "review",
+  "expectedAnswer": "I'll get right on it! We have a convenient way for you to send a review. You can visit our website and navigate to the 'Reviews' section, where you will find a form to fill out and submit your review. We value your feedback and appreciate you taking the time to share your thoughts with us. If you encounter any issues or need further assistance, feel free to reach out to our customer support team, who will be more than happy to help you. Happy reviewing!"
+ },
+ {
+  "id": 24,
+  "outOfScope": false,
+  "message": "setting new shipping address up",
+  "expectedIntent": "set_up_shipping_address",
+  "expectedAnswer": "I can definitely assist you in setting up a new shipping address. It's important to follow the correct steps to ensure accuracy:\n\n1. Login to your account on our website.\n2. Navigate to the \"My Account\" or \"Profile\" section, where you can manage your shipping details.\n3. Look for the option to add a new shipping address or edit your existing address.\n4. Fill in the required fields with the details of your new shipping address, such as the street, city, state, and postal code.\n5. Double-check the information you've provided to make sure it's correct.\n6. Save the changes to complete the process.\n\nIf you encounter any issues or need further assistance, don't hesitate to let me know. I'm here to help you every step of the way in setting up your new shipping address!"
+ },
+ {
+  "id": 25,
+  "outOfScope": false,
+  "message": "what do I have to do to change to the freemium account?",
+  "expectedIntent": "switch_account",
+  "expectedAnswer": "I appreciate your interest in transitioning to our freemium account! Allow me to guide you through the steps:\n\n1. Log in: Access your account by entering your login credentials.\n2. Go to Account Settings: Navigate to the '{{Settings}}' section or a similar tab within your profile.\n3. Account Type: Look for an option labeled '{{Account Type}}' or '{{Upgrade Account}}'.\n4. Select {{Account Category}}: Choose the '{{Account Category}}' account type from the available options.\n5. Confirmation: Follow any on-screen prompts or confirmations to finalize the change.\n\nIf you encounter any difficulties along the way or have additional questions, please don't hesitate to reach out. I'm here to provide any assistance you may need. Enjoy your new freemium account and its exciting features!"
+ },
+ {
+  "id": 26,
+  "outOfScope": false,
+  "message": "what is order {{Order Number}} status?",
+  "expectedIntent": "track_order",
+  "expectedAnswer": "We're all ears! I'm tuned into the idea that you would like to know the status of your order with the order number {{Order Number}}. To provide you with accurate information, could you please provide me with your account details or any associated email address? This will allow me to locate the specific order in our system and provide you with the most up-to-date status. Once I have this information, I will be able to assist you further."
+ },
+ {
+  "id": 27,
+  "outOfScope": false,
+  "message": "I'm waiting for a compensation of {{Refund Amount}} dollars",
+  "expectedIntent": "track_refund",
+  "expectedAnswer": "Thank you for bringing up your compensation inquiry. I understand how important it is for you to receive the compensation of {{Currency Symbol}}{{Refund Amount}} in a timely manner. Your satisfaction is our top priority, and I assure you that I will do my best to assist you with this. Allow me to check the current status of your compensation. Please bear with me for a moment while I gather the necessary information. Your patience is greatly appreciated."
+ },
+ {
+  "id": 28,
+  "outOfScope": true,
+  "message": "What's the weather forecast for tomorrow in Jakarta?",
+  "expectedIntent": null,
+  "expectedAnswer": null
+ },
+ {
+  "id": 29,
+  "outOfScope": true,
+  "message": "Can you recommend a good sci-fi movie to watch tonight?",
+  "expectedIntent": null,
+  "expectedAnswer": null
+ },
+ {
+  "id": 30,
+  "outOfScope": true,
+  "message": "Who won the last World Cup final and what was the score?",
+  "expectedIntent": null,
+  "expectedAnswer": null
+ }
+]
