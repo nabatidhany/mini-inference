@@ -4,6 +4,12 @@ A small version of a shared LLM gateway with one capability on top: a **customer
 
 Built for the Mekari "Code Challenge: Mini Inference Router" assessment. See [`docs/REPORT.md`](docs/REPORT.md) for design decisions, trade-offs and evaluation numbers.
 
+## 🌐 Live Deployments
+
+- **Console (Frontend)**: [https://mini-inference.vercel.app/](https://mini-inference.vercel.app/)
+- **Gateway (Backend API)**: [https://mini-inference.onrender.com/](https://mini-inference.onrender.com/)
+- **Health check**: `curl https://mini-inference.onrender.com/healthz`
+
 ## What it does
 
 - **Gateway** (Node.js/Express): `POST /v1/chat` with **SSE streaming**, authenticated by a **per-tenant API key**, with a **per-tenant daily token quota that fails closed** (429 before any model call), and **metering per request** (model, tokens, latency, cost, outcome — stored in SQLite).
